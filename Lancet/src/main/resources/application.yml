@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: lancet
+server:
+  port: 8800
+eureka:
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://localhost:2000/eureka/

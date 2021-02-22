@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: MyAuth
+  datasource:
+    name: ssoDB
+    url: jdbc:mysql://localhost:3306/sso?createDatabaseIfNotExist=false&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: n
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    filters: stat,slf4j
+    druid:
+      #  最大连接池数量
+      max-active: 20
+      # 初始化连接池的数量
+      initial-size: 5
+      # 最小连接池 数量
+      min-idle: 2
+      # 这里建议配置为TRUE，防止取到的连接不可用
+      test-on-borrow: true
+      test-on-return: false
+      # 验证连接有效与否的SQL，不同的数据配置不同
+      validation-query: select
+      #通过别名的方式配置扩展插件，常用的插件有：
+      #监控统计用的filter:stat日志用的filter:log4j防御sql注入的filter:wall
+      filters: stat,slf4j,wall
+      #  配置获取连接等待超时的时间 单位毫秒
+      max-wait: 6000
+    stat-view-servlet:
+      login-username: admin
+      login-password: 123456
+      reset-enable: false
+      url-pattern: /druid/*
+      # 添加IP白名单
+      #allow:
+      # 添加IP黑名单，当白名单和黑名单重复时，黑名单优先级更高
+
+server:
+  port: 9910
+#  eviction-interval-timer-in-ms: 10000
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:9900/eureka/
+#    instance: 
+#      lease-renewal-interval-in-seconds: 15  
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+    com.wayne.auth.dao.mapper: debug
